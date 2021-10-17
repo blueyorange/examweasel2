@@ -1,0 +1,4 @@
+.env/
+.env_imac/
+__pycache__/
+.DS_Store
