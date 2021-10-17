@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>ExamWeasel</title>
-    </head>
-    <body>
-        <nav>
-            <ul>
-                <li>
-                    <a href="{{ url_for('logout') }}">Log out</a>
-                </li>
-            </ul>
-        </nav>
-    </body>
+{% extends 'base.html' %}
+{% block title %}DB {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block body %}
+    <nav>
+        <ul>
+            <li>
+                <a href="{{ url_for('logout') }}">Log out</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
 </html>
