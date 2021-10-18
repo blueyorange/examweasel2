@@ -34,7 +34,8 @@ class User(db.Model):
 @app.route("/")
 def home():
     if 'username' in session:
-        return render_template('index.html')
+        user = User.query.filter_by(username=session['username'])
+        return render_template('index.html', user=user)
     else:
         return redirect(url_for('login'))
 

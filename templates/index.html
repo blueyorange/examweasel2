@@ -4,12 +4,26 @@
 {{ super() }}
 {% endblock %}
 {% block body %}
-    <nav>
-        <ul>
-            <li>
-                <a href="{{ url_for('logout') }}">Log out</a>
-            </li>
-        </ul>
-    </nav>
+<div class="container">
+  <nav class="topnav">
+    <ul>
+      <li><a href="#load">Load</a></li>
+      <li style="float:right"><a class="active" href="{{ url_for('logout') }}">Log out</a></li>
+    </ul>
+  </nav>
+  <div class="panel questions">
+    <div class="panel-header">Questions</div>
+  </div>
+  <div class="panel viewer">
+    <div class="panel-header">
+      Viewer
+    </div>
+  </div>
+  <div class="panel document">
+    <div class="panel-header">
+      Document
+    </div>
+  </div>
+</div>
 {% endblock %}
 </html>
