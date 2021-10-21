@@ -36,7 +36,9 @@ var EW = {
     },
 
     selectQuestion: function(target) {
-        console.log(target);
+        document.querySelectorAll('.question').forEach( (i) => {
+            i.classList.remove('question-selected')
+        });
         target.classList.add('question-selected');
     }
 };

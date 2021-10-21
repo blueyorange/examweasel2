@@ -104,9 +104,13 @@ ul.questions {
   background-color: white;
   height: 3em;
   color: black;
-  padding: 2em;
+  padding: 0.2em;
   border-bottom: 0.1em solid #446d88;
   overflow: hidden;
+}
+
+.question:hover:not(.question-selected){
+  background-color: mintcream;
 }
 
 .question-topic {
@@ -115,7 +119,7 @@ ul.questions {
 }
 
 .question-selected {
-  background-color: #58a;
+  background-color: rgb(181, 189, 194);
 }
 
 div.question-description {
