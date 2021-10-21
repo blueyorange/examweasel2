@@ -18,19 +18,7 @@
     </div>
     <div class="panel-body">
       <ul class="questions" id="qdb">
-        {% for question in questions %}
-        <li  class="question">
-            <div class="question-topic">
-                {{ question.topic }}
-            </div>
-            <div class="question-marks">
-                {{ question.marks }}
-            </div>
-            <div class="question-description">
-                {{ question.description }}
-            </div>
-        </li>
-    {% endfor %}
+        {% include 'questions.html' %}
       </ul>
     </div>
   </div>

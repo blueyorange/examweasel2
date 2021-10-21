@@ -18,6 +18,7 @@ def db_setup():
     q.topic = 'topic'
     q.content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     q.description = 'A question about potatoes.'
+    q.qImages = ['question/']
     db.session.add_all([u,q])
     db.session.commit()
     
@@ -80,7 +81,7 @@ def logout():
         session.pop('username')
     return redirect(url_for("login"))
 
-@app.route("/newquestion", methods=['GET'])
+@app.route("/newquestion", methods=['POST'])
 def newQuestion():
     print("Creating new question...")
     q = Question()
@@ -90,7 +91,7 @@ def newQuestion():
     q.marks = 1
     db.session.add(q)
     db.session.commit()
-    return render_template('questions.html', questions=Question.query.all())
+    return render_template('question.html', question=q)
 
 @app.route("/queryquestions")
 def queryQuestionHTML():
