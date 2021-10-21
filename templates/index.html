@@ -13,6 +13,26 @@
   </nav>
   <div class="panel questions">
     <div class="panel-header">Questions</div>
+    <div class="panel-actions">
+      <button type="button" id="new_question">New Question</button>
+    </div>
+    <div class="panel-body">
+      <ul class="questions" id="qdb">
+        {% for question in questions %}
+        <li  class="question">
+            <div class="question-topic">
+                {{ question.topic }}
+            </div>
+            <div class="question-marks">
+                {{ question.marks }}
+            </div>
+            <div class="question-description">
+                {{ question.description }}
+            </div>
+        </li>
+    {% endfor %}
+      </ul>
+    </div>
   </div>
   <div class="panel viewer">
     <div class="panel-header">

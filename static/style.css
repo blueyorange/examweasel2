@@ -3,9 +3,10 @@ body {
     font-size: 16px;
     line-height: 1.5;
     margin: 0;
+    background: rgb(250, 238, 218);
 }
 
-ul {
+.topnav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -13,11 +14,11 @@ ul {
   background-color: #333;
 }
 
-li {
+.topnav li {
   float: left;
 }
 
-li a {
+.topnav li a {
   display: block;
   color: white;
   text-align: center;
@@ -25,11 +26,11 @@ li a {
   text-decoration: none;
 }
 
-li a:hover:not(.active) {
+.topnav li a:hover:not(.active) {
   background-color: #111;
 }
 
-.active {
+.topnav li .active {
   background-color: #58a;
 }
 
@@ -61,18 +62,68 @@ li a:hover:not(.active) {
 }
 
 .panel {
-  margin: 10px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  margin: 0.2em;
   background-color: #fff;
   color: #fff;
-  border: 1px solid #446d88;
-  border-radius: 7px;
-  box-shadow: 0 1px 5px gray;
-  overflow: hidden;
+  border: 0.1em solid #446d88;
+  border-radius: 0.3em;
+  box-shadow: 0 0.1em 0.5em rgba(0,0,0,0.5);
+  overflow: auto;
 }
 
 .panel-header {
-  background: #58a linear-gradient(#77a0bb, #58a);
-  padding: 6px 16px;
-  border-radius: 0px;
-  border-bottom: 1px solid #446d88;
+  background: #58a linear-gradient(hsla(0,0%,100%,.2), transparent);
+  padding: 0.5em 1em;
+  border-radius: 0.1em 0.1em 0 0;
+  border-bottom: 0.1em solid #446d88;
+}
+
+.panel-actions {
+  background-color: lightslategray;
+}
+.panel-body {
+  overflow-y: scroll;
+  display: block;
+}
+
+ul.questions {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.question {
+  display: grid;
+  font-size: 0.8em;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:  "question-topic question-marks"
+                        "question-description question-marks";
+  background-color: white;
+  height: 3em;
+  color: black;
+  padding: 2em;
+  border-bottom: 0.1em solid #446d88;
+  overflow: hidden;
+}
+
+.question-topic {
+  color: gray;
+  margin: 0;
+}
+
+.question-selected {
+  background-color: #58a;
+}
+
+div.question-description {
+  font-weight: bold;
+  color: black;
+  height: 3em;
+}
+
+div.question-marks {
+  align-content: center;
 }
