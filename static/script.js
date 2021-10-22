@@ -57,6 +57,20 @@ var EW = {
         target.classList.add('question-selected');
         var id = target.dataset.id;
         console.log(`Id ${id} selected.`)
+        this.viewer(id);
+    },
+
+    viewer: function(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState==4 && this.status==200) {
+                console.log(this.responseText);
+                var viewer = document.querySelector('div.viewer-images');
+                viewer.innerHTML = this.responseText;
+            }
+        }
+        xhttp.open("GET", "/viewer?id="+id)
+        xhttp.send();
     }
 };
 

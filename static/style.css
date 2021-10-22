@@ -43,7 +43,7 @@ body {
   grid-template-areas:
   "topnav topnav"
   "questions viewer"
-  "document viewer"
+  "document viewer";
 }
 
 .topnav {
@@ -63,7 +63,8 @@ body {
 
 .panel {
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  height: 100%;
+  grid-template-rows: auto 1fr;
   margin: 0.2em;
   background-color: #fff;
   color: #fff;
@@ -130,4 +131,9 @@ div.question-description {
 
 div.question-marks {
   align-content: center;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }

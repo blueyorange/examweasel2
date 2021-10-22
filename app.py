@@ -3,6 +3,8 @@ from flask.templating import render_template
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
+import os
+from glob import glob
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -18,7 +20,6 @@ def db_setup():
     q.topic = 'topic'
     q.content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     q.description = 'A question about potatoes.'
-    q.qImages = ['question/']
     db.session.add_all([u,q])
     db.session.commit()
     
@@ -96,3 +97,13 @@ def newQuestion():
 @app.route("/queryquestions")
 def queryQuestionHTML():
     return render_template('questions.html', questions=Question.query.all())
+
+@app.route('/viewer')
+def viewer():
+    path = os.path.join("static","images")
+    id = request.args['id']
+    qImagePaths = glob(os.path.join(path, id,"q","*.png"))
+    msImagePaths = glob(os.path.join(path, id, "ms","*.png"))
+    print(qImagePaths)
+    print(msImagePaths)
+    return render_template('viewer.html', qPaths=qImagePaths, msPaths=msImagePaths)
