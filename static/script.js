@@ -1,14 +1,4 @@
 var EW = {
-    initialise: function() {
-    },
-
-    addQuestionEventListeners: function() {
-        const questions = document.querySelectorAll(".question");
-        questions.forEach( (i) => {
-            i.addEventListener("click", (e)=>EW.handleSelectQuestion(e));
-        })
-    },
-
     updateQuestionDB: function() {
         var xhttp = new XMLHttpRequest();
         console.log("Updating QDB...")
@@ -34,8 +24,6 @@ var EW = {
                 console.log(this.responseText);
                 var list = document.querySelector('ul.questions');
                 list.insertAdjacentHTML('beforeend', this.responseText);
-                console.log(list);
-                console.log(list.lastChild);
                 var newEl = list.lastChild;
                 newEl.addEventListener("click", (e) => EW.selectQuestion(e.currentTarget));
                 EW.selectQuestion(newEl);
@@ -46,7 +34,6 @@ var EW = {
     },
 
     handleSelectQuestion: function(e) {
-        console.log('clicked');
         this.selectQuestion(e.currentTarget);
     },
 
@@ -64,18 +51,33 @@ var EW = {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState==4 && this.status==200) {
-                console.log(this.responseText);
-                var viewer = document.querySelector('div.viewer-images');
+                var viewer = document.querySelector('#viewer-content');
                 viewer.innerHTML = this.responseText;
+
             }
         }
         xhttp.open("GET", "/viewer?id="+id)
         xhttp.send();
+    },
+
+    activateTabs: function() {
+        var buttons = document.querySelectorAll('.tab-button');
+        console.log(buttons[0]);
+        var tabs = [...document.querySelectorAll('.tab-button')].map(button => new Tab(button));
+        tabs[0].select();
+    },
+
+    updateTabs: function() {
+        this.tabs.forEach(tab => {
+            if (tab.Selected = true) {tab.select}
+            else {tab.deselect}
+        })
     }
 };
 
-console.log("Document loaded.")
-EW.initialise();
 document.getElementById("new_question").addEventListener("click", EW.newQuestion);
-EW.addQuestionEventListeners();
-
+const questions = document.querySelectorAll(".question");
+EW.selectQuestion(questions[0]);
+questions.forEach( (q) => {
+    q.addEventListener("click", (e)=>EW.handleSelectQuestion(e));
+})

@@ -137,3 +137,13 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+div.viewer-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "question markscheme data";
+}
+
+div.tab-content {
+  display: none;
+}

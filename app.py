@@ -92,7 +92,7 @@ def newQuestion():
     q.marks = 1
     db.session.add(q)
     db.session.commit()
-    return render_template('question.html', question=q)
+    return render_template('questions.html', questions=[q])
 
 @app.route("/queryquestions")
 def queryQuestionHTML():
@@ -104,6 +104,5 @@ def viewer():
     id = request.args['id']
     qImagePaths = glob(os.path.join(path, id,"q","*.png"))
     msImagePaths = glob(os.path.join(path, id, "ms","*.png"))
-    print(qImagePaths)
-    print(msImagePaths)
-    return render_template('viewer.html', qPaths=qImagePaths, msPaths=msImagePaths)
+    q=Question.query.filter_by(id=id).first()
+    return render_template('viewer.html', qPaths=qImagePaths, msPaths=msImagePaths, q=q)
