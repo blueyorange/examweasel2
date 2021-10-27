@@ -1,15 +1,8 @@
 var EW = {
     updateQuestionDB: function() {
-        var xhttp = new XMLHttpRequest();
-        console.log("Updating QDB...")
-        xhttp.onreadystatechange = function() {
-            if (this.readyState==4 && this.status==200) {
-                document.getElementById("qdb").innerHTML = this.responseText;
-                EW.addQuestionEventListeners();
-            }
-        }
-        xhttp.open("GET", "/queryquestions")
-        xhttp.send();
+        fetch('/queryquestions')
+        .then(response => response.text)
+        .then(text => document.getElementById("qdb").innerHTML = text)
     },
 
     handleNewQuestion: function() {
@@ -17,6 +10,7 @@ var EW = {
     },
 
     newQuestion: function() {
+
         console.log("new question button clicked")
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -49,12 +43,12 @@ var EW = {
 
     viewer: function(id) {
         fetch(`viewer?id=${id}`)
-        .then(response => response.json())
+        .then(response => response.json()
         .then(data => {
             Object.keys(data).forEach( key => 
                 document.getElementById(key).innerHTML = data[key]
             )
-        });
+        }));
     }
 }
 
