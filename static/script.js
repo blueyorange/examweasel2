@@ -48,36 +48,21 @@ var EW = {
     },
 
     viewer: function(id) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState==4 && this.status==200) {
-                var viewer = document.querySelector('#viewer-content');
-                viewer.innerHTML = this.responseText;
-
-            }
-        }
-        xhttp.open("GET", "/viewer?id="+id)
-        xhttp.send();
-    },
-
-    activateTabs: function() {
-        var buttons = document.querySelectorAll('.tab-button');
-        console.log(buttons[0]);
-        var tabs = [...document.querySelectorAll('.tab-button')].map(button => new Tab(button));
-        tabs[0].select();
-    },
-
-    updateTabs: function() {
-        this.tabs.forEach(tab => {
-            if (tab.Selected = true) {tab.select}
-            else {tab.deselect}
-        })
+        fetch(`viewer?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            Object.keys(data).forEach( key => 
+                document.getElementById(key).innerHTML = data[key]
+            )
+        });
     }
-};
+}
 
 document.getElementById("new_question").addEventListener("click", EW.newQuestion);
 const questions = document.querySelectorAll(".question");
 EW.selectQuestion(questions[0]);
 questions.forEach( (q) => {
-    q.addEventListener("click", (e)=>EW.handleSelectQuestion(e));
+    q.addEventListener("click", (e) => {
+        EW.handleSelectQuestion(e);
+    });
 })

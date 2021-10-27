@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, session
+from flask import Flask, request, redirect, url_for, session, jsonify
 from flask.templating import render_template
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -105,4 +105,7 @@ def viewer():
     qImagePaths = glob(os.path.join(path, id,"q","*.png"))
     msImagePaths = glob(os.path.join(path, id, "ms","*.png"))
     q=Question.query.filter_by(id=id).first()
-    return render_template('viewer.html', qPaths=qImagePaths, msPaths=msImagePaths, q=q)
+    q_template = render_template('view-question.html',qPaths=qImagePaths)
+    ms_template = render_template('view-ms.html', msPaths=msImagePaths)
+    data_template = render_template('view-data.html', q=q)
+    return jsonify(question=q_template, markscheme=ms_template, data=data_template)
