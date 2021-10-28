@@ -10,21 +10,15 @@ var EW = {
     },
 
     newQuestion: function() {
-
-        console.log("new question button clicked")
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState==4 && this.status==200) {
-                console.log(this.responseText);
-                var list = document.querySelector('ul.questions');
-                list.insertAdjacentHTML('beforeend', this.responseText);
-                var newEl = list.lastChild;
-                newEl.addEventListener("click", (e) => EW.selectQuestion(e.currentTarget));
-                EW.selectQuestion(newEl);
-            }
-        }
-        xhttp.open("POST", "/newquestion")
-        xhttp.send();
+        fetch('/newquestion')
+        .then(response => response.text)
+        .then(html => {
+            var list = document.querySelector('ul.questions');
+            list.insertAdjacentHTML('beforeend', html);
+            var newEl = list.lastChild;
+            newEl.addEventListener("click", (e) => EW.selectQuestion(e.currentTarget));
+            EW.selectQuestion(newEl);
+         })
     },
 
     handleSelectQuestion: function(e) {

@@ -11,7 +11,7 @@
       <li style="float:right"><a class="active" href="{{ url_for('logout') }}">Log out</a></li>
     </ul>
   </nav>
-  <div class="panel">
+  <div class="panel panel-questions">
     <div class="panel-header">Questions</div>
     <div class="panel-actions">
       <button type="button" id="new_question">New Question</button>
@@ -22,22 +22,22 @@
       </ul>
     </div>
   </div>
-  <div class="panel viewer">
+  <div class="panel panel-viewer">
     <div class="panel-header">
       <button class="tab-button" data-target="question">Question</button>
       <button class="tab-button" data-target="markscheme">Mark Scheme</button>
-      <button class="tab-button" data-target="data">Data</button>
     </div>
     <div class="panel-body" id="viewer-content">
-      <div class="tab-content" id="question" data-tabname="Question">
+      <div class="tab-content" id="question">
       </div>
-      <div class="tab-content" id="markscheme" data-tabname="Mark Scheme">
-      </div>
-      <div class="tab-content" id="data" data-tabname="Data">
+      <div class="tab-content" id="markscheme">
       </div>
     </div>
   </div>
-  <div class="panel document">
+  <div class="panel panel-editor">
+    <div class="panel-body" id="data"></div>
+  </div>
+  <div class="panel panel-document">
     <div class="panel-header">
       Document
     </div>

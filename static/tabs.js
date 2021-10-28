@@ -17,6 +17,7 @@ var tabs = {
 }
 
 var buttons = document.querySelectorAll('.tab-button');
+tabs.select(buttons[0]);
 buttons.forEach(button => button.addEventListener("click", (e) => tabs.handleClick(e)));
 function initialise() {
     console.log("result " + document.querySelector('#question'));
