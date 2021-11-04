@@ -1,187 +1,199 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
+    color: hsl(0, 0%, 50%);
     font-size: 16px;
     line-height: 1.5;
     margin: 0;
 }
 
-.topnav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
-.topnav li {
-  float: left;
-}
-
-.topnav li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.topnav li a:hover:not(.active) {
-  background-color: #111;
-}
-
-.topnav li .active {
-  background-color: #58a;
-}
-
-.container {
-  display: grid;
-  height: 100vh;
-  grid-gap: 5px;
-  grid-template-columns: 300px 1fr 225px;
-  grid-template-rows: 50px 1fr 1fr;
-  grid-template-areas:
-  "topnav topnav topnav"
-  "questions viewer editor"
-  "document viewer editor";
-}
-
-.topnav {
-  grid-area: topnav;
-}
-.panel-questions {
-  grid-area: questions;
-}
-
-.panel-document {
-  grid-area: document;
-}
-
-.panel-viewer {
-  grid-area: viewer;
-}
-
-.panel-editor {
-  grid-area: editor;
-  background-color: #58a;
-  color: white;
+.page {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 300px 1fr 300px;
+    grid-template-rows: auto 1fr 1fr;
+    grid-template-areas: "topnav topnav topnav" "questions viewer editor" "document viewer editor";
 }
 
 .panel {
-  display: grid;
-  height: 100%;
-  padding: 0;
-  grid-template-rows: auto 1fr;
-  color: #fff;
-  overflow: auto;
-  border: 1px solid #58a;
+    border-radius: 1em;
+    display: grid;
+    overflow: hidden;
+    margin: 5px;
+    padding: 0;
+    grid-template-rows: auto 1fr;
+    border: 1px solid hsl(0, 0%, 85%)
 }
 
-.panel-header {
-  background: #58a;
-  padding: 0;
-  margin: 0;
-  border: none;
+#questions {
+    grid-area: questions;
 }
 
-.panel-body {
-  overflow-y: scroll;
-  display: block;
-  border: none;
+#document {
+    grid-area: document;
 }
 
-ul.questions {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+#viewer {
+    grid-area: viewer;
 }
 
-.question {
-  display: grid;
-  font-size: 0.8em;
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas:  "question-topic question-marks"
-                        "question-description question-marks";
-  background-color: white;
-  height: 3em;
-  color: black;
-  padding: 0.2em;
-  border-bottom: 0.1em solid #446d88;
-  overflow: hidden;
+#data {
+    grid-area: editor;
 }
 
-.question:hover:not(.question-selected){
-  background-color: lightslategray;
+nav {
+    height: fit-content;
+    border-bottom: none;
+    background-color: hsl(0, 0%, 85%);
 }
 
-.question-topic {
-  color: gray;
-  margin: 0;
+nav>* {
+    padding: 1em;
+    display: inline-block;
+    font-size: 1em;
+    margin: 0;
+    border: none;
+    background-color: inherit;
+    vertical-align: middle;
 }
 
-.question-selected {
-  background-color: rgb(181, 189, 194);
+#topnav {
+    grid-area: topnav;
 }
 
-div.question-description {
-  font-weight: bold;
-  color: black;
-  height: 3em;
-}
-
-div.question-marks {
-  align-content: center;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-div.viewer-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "question markscheme data";
-}
-
-div.tab-content {
-  display: none;
-}
-
-form>input,label,textarea {
-  display: block;
-  box-sizing: border-box;
-  font-family: inherit;
-  font-size: 0.8em;
-  margin: 0.5em;
-}
-
-form>input, textarea {
-  display: block;
-  margin-bottom: 1em;
-  padding: 0.5em;
-  background-color: white;
-  border: none;
-}
-
-form>label {
-  display: block;
-}
-
-form>textarea {
-  height: 10em;
-  resize: none;
+.right {
+    float: right;
 }
 
 .tab-button {
-  font: inherit;
-  background-color: inherit;
-  color: white;
-  padding: 0.8em 1em;
-  border: none;
+    color: inherit;
+    box-sizing: border-box;
 }
 
 .tab-button.active {
-  background-color: white;
-  color: black;
+    color: black;
+    background-color: white;
+}
+
+button:hover {}
+
+button.icon {
+    font-size: 2em;
+    padding: 0.28em 0.7em;
+    float: right;
+}
+
+button.add {
+    color: hsl(120, 50%, 50%);
+}
+
+button.add:hover {
+    color: hsl(120, 100%, 50%);
+}
+
+button.delete {
+    color: hsl(0, 50%, 50%);
+}
+
+button.delete:hover {
+    color: hsl(0, 100%, 50%);
+}
+
+.panel-body {
+    display: block;
+    border: none;
+    background-color: white;
+}
+
+ul.question-list {
+    overflow-y: auto;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.question {
+    display: grid;
+    font-size: 0.8em;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "question-topic question-marks" "question-description question-marks";
+    background-color: white;
+    height: 3em;
+    color: black;
+    padding: 0.2em;
+    border-bottom: 0.1em solid #446d88;
+}
+
+.question:hover:not(.question-selected) {
+    background-color: lightslategray;
+}
+
+.question-topic {
+    margin: 0;
+}
+
+.question-selected {
+    background-color: hsl(0, 0%, 80%);
+}
+
+div.question-description {
+    font-weight: bold;
+    color: black;
+    height: 3em;
+}
+
+div.question-marks {
+    align-content: center;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+div.viewer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "question markscheme data";
+}
+
+div.tab-content {
+    display: none;
+}
+
+.form-item {
+    box-sizing: border-box;
+}
+
+.form-item>input,
+label,
+textarea {
+    display: block;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 0.8em;
+    margin: 0.5em;
+    width: 100%;
+}
+
+.form-item>input,
+textarea {
+    display: block;
+    margin-bottom: 1em;
+    padding: 0.5em;
+    background-color: white;
+    border: none;
+}
+
+.form-item>label {
+    display: block;
+}
+
+.form-item>textarea {
+    height: 10em;
+    resize: none;
+}
+
+.form-item {
+    margin-bottom: 0.5em;
 }

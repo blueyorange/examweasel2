@@ -46,7 +46,7 @@ var EW = {
     }
 }
 
-document.getElementById("new_question").addEventListener("click", EW.newQuestion);
+document.getElementById("new-question").addEventListener("click", EW.newQuestion);
 const questions = document.querySelectorAll(".question");
 EW.selectQuestion(questions[0]);
 questions.forEach( (q) => {

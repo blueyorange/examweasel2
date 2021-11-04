@@ -1,47 +1,38 @@
-{% extends 'base.html' %}
-{% block title %}DB {% endblock %}
-{% block head %}
-{{ super() }}
-{% endblock %}
-{% block body %}
-<div class="container">
-  <nav class="topnav">
-    <ul>
-      <li><a href="#load">Load</a></li>
-      <li style="float:right"><a class="active" href="{{ url_for('logout') }}">Log out</a></li>
-    </ul>
-  </nav>
-  <div class="panel panel-questions">
-    <div class="panel-header">Questions</div>
-    <div class="panel-actions">
-      <button type="button" id="new_question">New Question</button>
+{% extends 'base.html' %} {% block title %}DB {% endblock %} {% block head %} {{ super() }} {% endblock %} {% block body %}
+<div class="page">
+    <nav id="topnav">
+        <button class="nav-item">Load</button>
+        <button class="nav-item right"><a class="active" href="{{ url_for('logout') }}">Log out</a></button>
+    </nav>
+    <div class="panel" id="questions">
+        <nav>
+            <div>Questions</div>
+            <button class="icon add" type="button" id="delete-question">-</button>
+            <button class="icon delete" type="button" id="new-question">+</button>
+        </nav>
+        <ul class="question-list" id="qdb">
+            {% include 'questions.html' %}
+        </ul>
     </div>
-    <div class="panel-body">
-      <ul class="questions" id="qdb">
-        {% include 'questions.html' %}
-      </ul>
+    <div class="panel" id="viewer">
+        <nav>
+            <button class="tab-button active" data-target="question">Question</button>
+            <button class="tab-button" data-target="markscheme">Mark Scheme</button>
+        </nav>
+        <div class="panel-body" id="viewer-content">
+            <div class="tab-content" id="question"></div>
+            <div class="tab-content" id="markscheme"></div>
+        </div>
     </div>
-  </div>
-  <div class="panel panel-viewer">
-    <div class="panel-header">
-      <button class="tab-button" data-target="question">Question</button>
-      <button class="tab-button" data-target="markscheme">Mark Scheme</button>
+    <div class="panel" id="data">
     </div>
-    <div class="panel-body" id="viewer-content">
-      <div class="tab-content" id="question">
-      </div>
-      <div class="tab-content" id="markscheme">
-      </div>
+    <div class="panel" id="document">
+        <nav>
+            <span>New Document</span>
+        </nav>
+        <ul class="question-list"></ul>
     </div>
-  </div>
-  <div class="panel panel-editor">
-    <div class="panel-body" id="data"></div>
-  </div>
-  <div class="panel panel-document">
-    <div class="panel-header">
-      Document
-    </div>
-  </div>
 </div>
 {% endblock %}
+
 </html>
