@@ -47,7 +47,7 @@ nav {
 }
 
 nav>* {
-    padding: 1em;
+    padding: 0.7em;
     display: inline-block;
     font-size: 1em;
     margin: 0;
@@ -74,11 +74,9 @@ nav>* {
     background-color: white;
 }
 
-button:hover {}
-
 button.icon {
     font-size: 2em;
-    padding: 0.28em 0.7em;
+    padding: 0.1em 0.3em;
     float: right;
 }
 
@@ -121,11 +119,13 @@ ul.question-list {
     height: 3em;
     color: black;
     padding: 0.2em;
-    border-bottom: 0.1em solid #446d88;
+    border: 0.1em solid hsl(0, 0%, 85%);
+    box-shadow: 0 .05em .25em rgba(0, 0, 0, .5);
+    margin: 3px;
 }
 
 .question:hover:not(.question-selected) {
-    background-color: lightslategray;
+    background-color: hsl(0, 0%, 88%);
 }
 
 .question-topic {
