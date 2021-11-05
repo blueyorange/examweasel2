@@ -15,7 +15,7 @@ body {
 }
 
 .panel {
-    border-radius: 1em;
+    border-radius: 0.5em;
     display: grid;
     overflow: hidden;
     margin: 5px;
@@ -36,7 +36,7 @@ body {
     grid-area: viewer;
 }
 
-#data {
+#editor {
     grid-area: editor;
 }
 
@@ -161,39 +161,43 @@ div.tab-content {
     display: none;
 }
 
-.form-item {
-    box-sizing: border-box;
+#editor {
+    background-color: hsl(0, 0%, 85%);
 }
 
-.form-item>input,
-label,
-textarea {
-    display: block;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: 0.8em;
-    margin: 0.5em;
-    width: 100%;
-}
-
-.form-item>input,
-textarea {
-    display: block;
-    margin-bottom: 1em;
+#data-form {
+    display: flex;
+    flex-direction: column;
+    height: calc(85vh);
     padding: 0.5em;
-    background-color: white;
+}
+
+#data-form label {
+    font-size: 0.8em;
+    margin-bottom: 0;
+}
+
+#data-form>textarea {
     border: none;
-}
-
-.form-item>label {
-    display: block;
-}
-
-.form-item>textarea {
-    height: 10em;
+    border-radius: 0.2em;
     resize: none;
+    font-family: inherit;
+    margin-bottom: 0.5em;
 }
 
-.form-item {
+#data-form>input {
+    border: none;
     margin-bottom: 0.5em;
+    height: 2em;
+    border-radius: 0.2em;
+}
+
+#data-form textarea {
+    flex-grow: 1;
+    box-sizing: border-box;
+    height: fit-content;
+}
+
+.button-save:hover {
+    background-color: hsl(0, 100%, 50%)
 }
