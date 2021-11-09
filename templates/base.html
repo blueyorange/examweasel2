@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <html>
-    <head>
-        {% block head %}
-        <title>{% block title %}{% endblock %} - ExamWeasel</title>
-        <link href="static/style.css" rel="stylesheet">
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}
-        {% endblock %}
-        <script src="static/script.js"></script>
-        <script src="static/tabs.js"></script>
-    </body>
+
+<head>
+    {% block head %}
+    <title>{% block title %}{% endblock %} - ExamWeasel</title>
+    <link href="static/style.css" rel="stylesheet"> {% endblock %}
+</head>
+
+<body>
+    {% block body %} {% endblock %}
+    <script src="static/script.js"></script>
+    <script src="static/tabs.js"></script>
+    <script src="static/dragdropupload.js"></script>
+</body>
+
 </html>

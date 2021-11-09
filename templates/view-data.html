@@ -1,14 +1,12 @@
-<form id="data-form" method="post">
-    <input type="hidden" value="{{ q.id }}">
-    <label for="course">Course</label>
-    <input type="text" id="course" name="course" value="{{ q.course }}">
-    <label for="topic">Topic</label>
-    <input type="text" id="topic" name="topic" value="{{ q.topic }}">
-    <label for="description">Description</label>
-    <textarea type="text" id="description" name="description">{{ q.description }}</textarea>
-    <label for="content">Content</label>
-    <textarea type="text" id="content" name="content">{{ q.content }}</textarea>
-    <label for="marks">Marks</label>
-    <input type="text" id="marks" name="marks" value="{{ q.marks }}">
-    <input class="button-save" type="submit" value="Save">
-</form>
+<input type="hidden" value="{{ q.id }}" id="id">
+<label for="course">Course</label>
+<input type="text" id="course" name="course" value="{{ q.course }}">
+<label for="topic">Topic</label>
+<input type="text" id="topic" name="topic" value="{{ q.topic }}">
+<label for="description">Description</label>
+<textarea type="text" id="description" name="description">{{ q.description }}</textarea>
+<label for="content">Content</label>
+<textarea type="text" id="content" name="content">{{ q.content }}</textarea>
+<label for="marks">Marks</label>
+<input type="text" id="marks" name="marks" value="{{ q.marks }}">
+<input class="button-save" type="submit" value="Save">

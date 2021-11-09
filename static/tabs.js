@@ -5,7 +5,7 @@ var tabs = {
     },
 
     select: function(thisButton) {
-        [...document.querySelectorAll('.tab-button')].forEach( button => {
+        [...document.querySelectorAll('.tab-button')].forEach(button => {
             button.classList.remove('active');
             document.getElementById(button.dataset.target).style.display = "none";
         });
@@ -19,6 +19,7 @@ var tabs = {
 var buttons = document.querySelectorAll('.tab-button');
 tabs.select(buttons[0]);
 buttons.forEach(button => button.addEventListener("click", (e) => tabs.handleClick(e)));
+
 function initialise() {
     console.log("result " + document.querySelector('#question'));
     tabs.select(buttons[0]);

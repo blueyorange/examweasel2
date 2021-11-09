@@ -19,13 +19,14 @@
             <button class="tab-button active" data-target="question">Question</button>
             <button class="tab-button" data-target="markscheme">Mark Scheme</button>
         </nav>
-        <div class="panel-body" id="viewer-content">
-            <div class="tab-content" id="question"></div>
-            <div class="tab-content" id="markscheme"></div>
-        </div>
-    </div>
-    <div class="panel" id="editor">
-        <div id="data"></div>
+        <form id="question-form" method="post">
+            <div class="image-content">
+                <div class="tab-content drop-area" id="question"></div>
+                <div class="tab-content" id="markscheme"></div>
+            </div>
+            <div id="data">
+            </div>
+        </form>
     </div>
     <div class="panel" id="document">
         <nav>

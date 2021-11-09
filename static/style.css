@@ -9,9 +9,9 @@ body {
 .page {
     display: grid;
     height: 100vh;
-    grid-template-columns: 300px 1fr 300px;
+    grid-template-columns: 300px 1fr;
     grid-template-rows: auto 1fr 1fr;
-    grid-template-areas: "topnav topnav topnav" "questions viewer editor" "document viewer editor";
+    grid-template-areas: "topnav topnav" "questions viewer" "document viewer";
 }
 
 .panel {
@@ -96,12 +96,6 @@ button.delete:hover {
     color: hsl(0, 100%, 50%);
 }
 
-.panel-body {
-    display: block;
-    border: none;
-    background-color: white;
-}
-
 ul.question-list {
     overflow-y: auto;
     list-style-type: none;
@@ -114,7 +108,7 @@ ul.question-list {
     font-size: 0.8em;
     grid-template-columns: 3fr 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-template-areas: "question-topic question-marks" "question-description question-marks";
+    grid-template-areas: "topic marks" "description marks";
     background-color: white;
     height: 3em;
     color: black;
@@ -129,6 +123,7 @@ ul.question-list {
 }
 
 .question-topic {
+    grid-area: topic;
     margin: 0;
 }
 
@@ -137,67 +132,70 @@ ul.question-list {
 }
 
 div.question-description {
+    grid-area: description;
     font-weight: bold;
     color: black;
     height: 3em;
 }
 
 div.question-marks {
+    grid-area: marks;
     align-content: center;
 }
 
+.button-save:hover {
+    background-color: hsl(0, 0%, 50%)
+}
+
+.drop-area.highlight {
+    border: 5px dashed hsl(61, 86%, 72%);
+}
+
+#question-form {
+    display: flex;
+    overflow-y: hidden;
+}
+
+.image-content {
+    overflow-y: scroll;
+    min-width: 400px;
+    width: 100%;
+    flex-grow: 2;
+}
+
 img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
 }
 
-div.viewer-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: "question markscheme data";
-}
-
 div.tab-content {
-    display: none;
+    overflow-y: hidden;
 }
 
-#editor {
+#data {
+    width: 300px;
     background-color: hsl(0, 0%, 85%);
-}
-
-#data-form {
     display: flex;
     flex-direction: column;
-    height: calc(85vh);
+    height: 100%;
     padding: 0.5em;
-}
-
-#data-form label {
-    font-size: 0.8em;
-    margin-bottom: 0;
-}
-
-#data-form>textarea {
-    border: none;
-    border-radius: 0.2em;
-    resize: none;
-    font-family: inherit;
-    margin-bottom: 0.5em;
-}
-
-#data-form>input {
-    border: none;
-    margin-bottom: 0.5em;
-    height: 2em;
-    border-radius: 0.2em;
-}
-
-#data-form textarea {
-    flex-grow: 1;
     box-sizing: border-box;
-    height: fit-content;
 }
 
-.button-save:hover {
-    background-color: hsl(0, 100%, 50%)
+#data>textarea,
+input {
+    border: none;
+    font-family: inherit;
+    border-radius: 0.2em;
+    padding: 0.4em 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#data>textarea {
+    height: 100%;
+    resize: none;
+}
+
+#data>label {
+    font-size: 0.7em;
 }

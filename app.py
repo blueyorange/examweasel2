@@ -104,8 +104,9 @@ def viewer():
     id = request.args['id']
     qImagePaths = glob(os.path.join(path, id,"q","*.png"))
     msImagePaths = glob(os.path.join(path, id, "ms","*.png"))
-    q=Question.query.filter_by(id=id).first()
+    q = Question.query.filter_by(id=id).first()
     q_template = render_template('view-question.html',qPaths=qImagePaths)
     ms_template = render_template('view-ms.html', msPaths=msImagePaths)
     data_template = render_template('view-data.html', q=q)
     return jsonify(question=q_template, markscheme=ms_template, data=data_template)
+
