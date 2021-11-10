@@ -147,6 +147,10 @@ div.question-marks {
     background-color: hsl(0, 0%, 50%)
 }
 
+.drop-area {
+    height: 100%;
+}
+
 .drop-area.highlight {
     border: 5px dashed hsl(61, 86%, 72%);
 }
@@ -182,6 +186,11 @@ div.tab-content {
     box-sizing: border-box;
 }
 
+#data> {
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
 #data>textarea,
 input {
     border: none;
@@ -189,6 +198,8 @@ input {
     border-radius: 0.2em;
     padding: 0.4em 0.5em;
     margin-bottom: 0.5em;
+    height: fit-content;
+    min-height: 2em;
 }
 
 #data>textarea {

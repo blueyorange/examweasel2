@@ -1,4 +1,5 @@
 let dropArea = document.querySelector('.drop-area');
+let questionImagesElem = document.querySelector('#question');
 
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
     dropArea.addEventListener(eventName, preventDefaults, false)
@@ -35,7 +36,17 @@ function handleDrop(e) {
 }
 
 function handleFiles(files) {
-    ([...files]).forEach(uploadFile)
+    console.log(files);
+    let template = document.querySelector('#image-template');
+    ([...files]).forEach((file, i) => {
+        let clone = template.content.cloneNode(true);
+        cloneImage = clone.querySelector('#image');
+        cloneImage.id = `image-question-${i}`;
+        cloneImage.src = URL.createObjectURL(file);
+        questionImagesElem.appendChild(clone);
+    })
+
+    //([...files]).forEach(uploadFile);
 }
 
 function uploadFile(file) {

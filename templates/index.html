@@ -21,7 +21,8 @@
         </nav>
         <form id="question-form" method="post">
             <div class="image-content">
-                <div class="tab-content drop-area" id="question"></div>
+                <div class="tab-content drop-area" id="question">
+                </div>
                 <div class="tab-content" id="markscheme"></div>
             </div>
             <div id="data">
@@ -35,6 +36,9 @@
         <ul class="question-list"></ul>
     </div>
 </div>
-{% endblock %}
+
+<template id="image-template">
+    <img id="image">
+</template> {% endblock %}
 
 </html>

@@ -8,5 +8,6 @@
 <label for="content">Content</label>
 <textarea type="text" id="content" name="content">{{ q.content }}</textarea>
 <label for="marks">Marks</label>
-<input type="text" id="marks" name="marks" value="{{ q.marks }}">
+<input type="number" id="marks" name="marks" value="{{ q.marks }}">
+<input type="file" id="qImageFileElem" multiple accept="image/*" onchange="handleFile(this.Files)">
 <input class="button-save" type="submit" value="Save">
