@@ -26,6 +26,20 @@
                 <div class="tab-content" id="markscheme"></div>
             </div>
             <div id="data">
+                <input type="hidden" value="" id="_id">
+                <label for="course">Course</label>
+                <input type="text" id="course" name="course">
+                <label for="topic">Topic</label>
+                <input type="text" id="topic" name="topic">
+                <label for="description">Description</label>
+                <textarea type="text" id="description" name="description"></textarea>
+                <label for="content">Content</label>
+                <textarea type="text" id="content" name="content"></textarea>
+                <label for="marks">Marks</label>
+                <input type="number" id="marks" name="marks" value="">
+                <input type="file" id="qImageFileElem" multiple accept="image/*" onchange="handleFile(this.Files)">
+                <input type="file" id="msImageFileElem" multiple accept="image/*" onchange="handleFile(this.Files)">
+                <input class="button-save" type="submit" value="Save" id="save-question">
             </div>
         </form>
     </div>
@@ -39,6 +53,17 @@
 
 <template id="image-template">
     <img id="image">
-</template> {% endblock %}
+</template>
 
+<template id="question-template">
+    <li class="question" data-id="">
+        <div class="topic">
+        </div>
+        <div class="marks">
+        </div>
+        <div class="description">
+        </div>
+    </li>
+</template>
+{% endblock %}
 </html>

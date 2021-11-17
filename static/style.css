@@ -122,7 +122,7 @@ ul.question-list {
     background-color: hsl(0, 0%, 88%);
 }
 
-.question-topic {
+.topic {
     grid-area: topic;
     margin: 0;
 }
@@ -131,14 +131,14 @@ ul.question-list {
     background-color: hsl(0, 0%, 80%);
 }
 
-div.question-description {
+div.description {
     grid-area: description;
     font-weight: bold;
     color: black;
     height: 3em;
 }
 
-div.question-marks {
+div.marks {
     grid-area: marks;
     align-content: center;
 }
