@@ -16,19 +16,19 @@ const request = (url, params = {}, method = 'GET') => {
     } else {
         options.body = JSON.stringify(params);
     }
-
+    console.log(`METHOD: ${options.method}`)
     return fetch(url, options).then(response => response.json());
 };
 const get = (url, params) => request(url, params, 'GET');
 const post = (url, params) => request(url, params, 'POST');
 const put = (url, params) => request(url, params, 'PUT');
 
-var EW = {
+const EW = {
     queryQuestions: function(query = {}) {
         console.log('fetching questions...');
         get('/questions', query)
             .then(questions => questions.forEach(question => this.createQuestionElem(question)))
-            //.catch(error => this.error(error));
+            .catch(error => this.error(error));
     },
 
     createQuestionElem: function(question) {
@@ -80,19 +80,29 @@ var EW = {
         var id = target.dataset.id;
         console.log(`Id ${id} selected.`)
         get(`/questions/${id}`)
-        .then(data => loadQuestionDataIntoForm(data))
+        .then(data => EW.loadQuestionDataIntoForm(data))
     },
 
     loadQuestionDataIntoForm(question) {
         // set form data
         // input fields
-        ["_id", "course", "topic", "marks"] .forEach(property => {
-            document.querySelector(`input#${property}`).setAttribute('value', question[property]);
-        })
+        ["id", "course", "topic", "marks"].forEach(property => {
+            let value="";
+            if (property in question) {
+                value = question[property];
+            } 
+            document.querySelector(`input#${property}`).setAttribute('value', value);
+        });
         // textarea fields
         ["content", "description"].forEach(property => {
-            document.querySelector(`textarea#${property}`).innerHTML = question[property];
-        })
+            let value="";
+            if (property in question) {
+                value = question[property];
+                
+            }
+            document.querySelector(`textarea#${property}`).innerHTML = value;
+        });
+        formElem.reset()
     },
 
     loadImages: function(id) {
@@ -105,12 +115,14 @@ var EW = {
                 }));
     },
 
-    saveQuestion : function() {
-        let formData = new formData(formElem);
-        let formDataObject = Object.fromEntries(formData);
-        let id = formDataObject._id;
-        let formDataJSON = JSON.stringify(formDataObject);
-        put(`/questions/${id}`, formDataJSON);
+    saveQuestion : function(e) {
+        e.preventDefault();
+        let form = new FormData(formElem);
+        id = form.get('id')
+        fetch(`/questions/${id}`, {
+            body: form,
+            method: 'PUT'
+        });
     },
 
     error : function(error) {
@@ -121,4 +133,4 @@ var EW = {
 // load up database with all questions
 EW.queryQuestions();
 document.getElementById("new-question").addEventListener("click", EW.newQuestion);
-document.getElementById("save-question").addEventListener("click", EW.saveQuestion);
+document.getElementById("save-question").addEventListener("click", e => EW.saveQuestion(e));

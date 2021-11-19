@@ -1,4 +1,4 @@
-from flask import Flask, json, request, redirect, url_for, session, jsonify
+from flask import Flask, Response, request, redirect, url_for, session, jsonify
 from flask.templating import render_template
 from config import Config
 from flask_pymongo import PyMongo
@@ -114,23 +114,27 @@ def viewer():
 @app.route('/questions', methods=['POST'])
 def create():
     question = loads(request.data)
-    _id = db.questions.insert_one(question).inserted_id
-    newQuestionDict = db.questions.find_one({'_id' : _id })
-    newQuestionDict['_id'] = str(newQuestionDict['_id'])
-    return jsonify(newQuestionDict)
+    id = db.questions.insert_one(question).inserted_id
+    return Response({'_id' : id}, status = 201, mimetype='application/json')
 
-@app.route('/questions/<string:id>')
+@app.route('/questions/<string:id>', methods=['GET', 'PUT'])
 def read(id):
-    doc = db.questions.find_one(ObjectId(id))
-    doc['_id'] = id
-    return jsonify(doc)
-
-@app.route('/questions/<string:id>', methods=['PUT'])
-def update(id):
-    data = request.form.to_dict()
-    id = ObjectId(data['_id'])
-    data.pop('_id')
-    db.questions.update_one({'_id' : id}, data)
+    print(id)
+    if request.method=='GET':
+        doc = db.questions.find_one(ObjectId(id))
+        doc['id'] = id
+        doc.pop('_id')
+        return jsonify(doc)
+    elif request.method=='PUT':
+        print(id)
+        data = request.form.to_dict()
+        print(type(data))
+        print(data)
+        if ObjectId(id).is_valid:
+            db.questions.update_one({'_id' : ObjectId(id)},{'$set' : data })
+            return Response({},200)
+        else:
+            return Response({},404)
 
 @app.route('/questions/<string:id>', methods=['DELETE'])
 def delete(id):
@@ -142,5 +146,4 @@ def query():
     questions = list(cursor)
     for question in questions:
         question['_id'] = str(question['_id'])
-    print(questions)
     return jsonify(questions)

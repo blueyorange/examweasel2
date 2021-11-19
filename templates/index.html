@@ -19,14 +19,14 @@
             <button class="tab-button active" data-target="question">Question</button>
             <button class="tab-button" data-target="markscheme">Mark Scheme</button>
         </nav>
-        <form id="question-form" method="post">
+        <form id="question-form">
             <div class="image-content">
                 <div class="tab-content drop-area" id="question">
                 </div>
                 <div class="tab-content" id="markscheme"></div>
             </div>
             <div id="data">
-                <input type="hidden" value="" id="_id">
+                <input type="text" value="" id="id" name="id">
                 <label for="course">Course</label>
                 <input type="text" id="course" name="course">
                 <label for="topic">Topic</label>
