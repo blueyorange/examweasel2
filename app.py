@@ -3,6 +3,7 @@ from flask.templating import render_template
 from config import Config
 from flask_pymongo import PyMongo
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 import os
 from glob import glob
 from bson import json_util
@@ -119,19 +120,29 @@ def create():
 
 @app.route('/questions/<string:id>', methods=['GET', 'PUT'])
 def read(id):
-    print(id)
     if request.method=='GET':
         doc = db.questions.find_one(ObjectId(id))
         doc['id'] = id
         doc.pop('_id')
         return jsonify(doc)
     elif request.method=='PUT':
-        print(id)
         data = request.form.to_dict()
-        print(type(data))
-        print(data)
         if ObjectId(id).is_valid:
             db.questions.update_one({'_id' : ObjectId(id)},{'$set' : data })
+            data['q_urls'] = []
+            print(request.files.getlist('question'))
+            for file in request.files.getlist('question'):
+                i = 1
+                print(file)
+                fileExtension = os.path.splitext(file.filename)[1]
+                print(fileExtension)
+                if fileExtension in app.config['ALLOWED_IMAGE_EXTENSIONS']:
+                    filename = id+'_'+'q'+'_'+str(i)+fileExtension
+                    print(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+                    data['q_urls'].append(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+            db.questions.update_one({'_id' : ObjectId(id)},{'$set' : data })
+            i += 1
             return Response({},200)
         else:
             return Response({},404)
