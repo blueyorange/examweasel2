@@ -1,14 +1,19 @@
+import base64
 from flask import Flask, Response, request, redirect, url_for, session, jsonify
 from flask.templating import render_template
 from config import Config
 from flask_pymongo import PyMongo
 from werkzeug.security import check_password_hash, generate_password_hash
-from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename, send_from_directory
 import os
+import uuid
 from glob import glob
 from bson import json_util
 from bson.json_util import loads, dumps, ObjectId
 from pprint import pprint
+import base64
+import io
+from string import Template
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -25,14 +30,15 @@ def db_setup():
     q.description = 'A question about potatoes.'
     db.users.insert_one(u.__dict__)
     db.questions.insert_one(q.__dict__)
-    
+
+
 class User:
     def __init__(self, username, password):
         self.username = username
         self.password = password
-    
+
     def commit(self):
-        if not db.users.count_documents({'username' : self.username }):
+        if not db.users.count_documents({'username': self.username}):
             # zero documents with that username found, so add new user
             db.users.insert_one(self.__dict__)
 
@@ -46,9 +52,10 @@ class User:
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
-    
+
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
 
 class Question:
     def __init__(self):
@@ -60,19 +67,21 @@ class Question:
         self.qImages = None
         self.msImages = None
 
+
 @app.route("/")
 def home():
     if 'username' in session:
-        user = db.users.find_one({'username' : session['username'] })
+        user = db.users.find_one({'username': session['username']})
         return render_template('index.html')
     else:
         return redirect(url_for('login'))
 
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    if request.method=='POST' and 'username' in request.form and 'password' in request.form:
-        user = db.users.find_one({'username' : request.form['username']})
-        if user and check_password_hash(user['password_hash'], password):
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        user = db.users.find_one({'username': request.form['username']})
+        if user and check_password_hash(user['password_hash'], request.form['password']):
             session['username'] = request.form['username']
             print("Logged in successfully")
             return redirect(url_for('home'))
@@ -82,11 +91,13 @@ def login():
         # GET request returns html for page
         return render_template('login.html')
 
+
 @app.route("/logout")
 def logout():
     if 'username' in session:
         session.pop('username')
     return redirect(url_for("login"))
+
 
 @app.route("/newquestion", methods=['POST'])
 def newQuestion():
@@ -100,56 +111,63 @@ def newQuestion():
     db.session.commit()
     return render_template('questions.html', questions=[q])
 
+
 @app.route('/viewer')
 def viewer():
-    path = os.path.join("static","images")
+    path = os.path.join("static", "images")
     id = request.args['id']
-    qImagePaths = glob(os.path.join(path, id,"q","*.png"))
-    msImagePaths = glob(os.path.join(path, id, "ms","*.png"))
+    qImagePaths = glob(os.path.join(path, id, "q", "*.png"))
+    msImagePaths = glob(os.path.join(path, id, "ms", "*.png"))
     q = Question.query.filter_by(id=id).first()
-    q_template = render_template('view-question.html',qPaths=qImagePaths)
+    q_template = render_template('view-question.html', qPaths=qImagePaths)
     ms_template = render_template('view-ms.html', msPaths=msImagePaths)
     data_template = render_template('view-data.html', q=q)
     return jsonify(question=q_template, markscheme=ms_template, data=data_template)
+
 
 @app.route('/questions', methods=['POST'])
 def create():
     question = loads(request.data)
     id = db.questions.insert_one(question).inserted_id
-    return Response({'_id' : id}, status = 201, mimetype='application/json')
+    return Response({'id': id}, status=201, mimetype='application/json')
+
 
 @app.route('/questions/<string:id>', methods=['GET', 'PUT'])
 def read(id):
-    if request.method=='GET':
+    if request.method == 'GET':
         doc = db.questions.find_one(ObjectId(id))
         doc['id'] = id
         doc.pop('_id')
         return jsonify(doc)
-    elif request.method=='PUT':
+    elif request.method == 'PUT':
         data = request.form.to_dict()
+        # update form data
+        # files are not in request.form data
+        # update file data
         if ObjectId(id).is_valid:
-            db.questions.update_one({'_id' : ObjectId(id)},{'$set' : data })
-            data['q_urls'] = []
-            print(request.files.getlist('question'))
-            for file in request.files.getlist('question'):
-                i = 1
-                print(file)
-                fileExtension = os.path.splitext(file.filename)[1]
-                print(fileExtension)
-                if fileExtension in app.config['ALLOWED_IMAGE_EXTENSIONS']:
-                    filename = id+'_'+'q'+'_'+str(i)+fileExtension
-                    print(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-                    data['q_urls'].append(os.path.join(app.config['UPLOAD_FOLDER'],filename))
-            db.questions.update_one({'_id' : ObjectId(id)},{'$set' : data })
-            i += 1
-            return Response({},200)
+            db.questions.update_one({'_id': ObjectId(id)}, {'$set': data})
+            for key in ['question-images', 'markscheme-images']:
+                for file in request.files.getlist(key):
+                    fileExtension = os.path.splitext(file.filename)[-1]
+                    if fileExtension in app.config['ALLOWED_IMAGE_EXTENSIONS']:
+                        image_string = base64.b64encode(file.read()).decode()
+                        dataURL = Template("data:image/$imgFormat;base64,$img").substitute(
+                            imgFormat=fileExtension[1:], img=image_string)
+                            # add data uri string to question-images or markscheme-images
+                        db.questions.update_one({'_id': ObjectId(id)}, {'$push': {key: dataURL}})
+            doc = db.questions.find_one(ObjectId(id))
+            print(doc)
+            doc['id'] = id
+            doc.pop('_id')
+            return jsonify(data)
         else:
-            return Response({},404)
+            return Response({}, 404)
+
 
 @app.route('/questions/<string:id>', methods=['DELETE'])
 def delete(id):
-    db.questions.delete_one({'_id' : ObjectId(id)})
+    db.questions.delete_one({'_id': ObjectId(id)})
+
 
 @app.route('/questions')
 def query():
@@ -158,3 +176,10 @@ def query():
     for question in questions:
         question['_id'] = str(question['_id'])
     return jsonify(questions)
+
+
+@app.route('/images/<string:id>/<string:imageType>/<int:index>')
+def getImage(id, imageType, index):
+    doc = db.questions.find_one(ObjectId(id))
+    filename = doc['images'][imageType][index]
+    return send_from_directory(app.config['IMAGE_FOLDER'], filename)

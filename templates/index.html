@@ -16,14 +16,14 @@
     </div>
     <div class="panel" id="viewer">
         <nav>
-            <button class="tab-button active" data-target="question">Question</button>
-            <button class="tab-button" data-target="markscheme">Mark Scheme</button>
+            <button class="tab-button active" data-target="question-images">Question</button>
+            <button class="tab-button" data-target="markscheme-images">Mark Scheme</button>
         </nav>
         <form id="question-form">
             <div class="image-content">
-                <div class="tab-content drop-area" id="question">
+                <div class="tab-content drop-area" id="question-images">
                 </div>
-                <div class="tab-content" id="markscheme"></div>
+                <div class="tab-content" id="markscheme-images"></div>
             </div>
             <div id="data">
                 <input type="text" value="" id="id" name="id">
@@ -37,7 +37,8 @@
                 <textarea type="text" id="content" name="content"></textarea>
                 <label for="marks">Marks</label>
                 <input type="number" id="marks" name="marks" value="">
-                <input type="file" id="qImageFileElem" multiple accept="image/*" onchange="handleFile(this.Files)" name='question'>
+                <input type="file" id="qImageFileElem" multiple accept="image/*" onchange="handleFile(this.Files)" name='question-images'>
+                <input type="file" id="qImageFileElem" multiple accept="image/*" onchange="handleFile(this.Files)" name='markscheme-images'>
                 <input class="button-save" type="submit" value="Save" id="save-question">
             </div>
         </form>
@@ -51,7 +52,7 @@
 </div>
 
 <template id="image-template">
-    <img id="image">
+    <img class="question-image">
 </template>
 
 <template id="question-template">

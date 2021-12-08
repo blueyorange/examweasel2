@@ -1,5 +1,5 @@
 // set up tabs
-var tabs = {
+var TBS = {
     handleClick: function(e) {
         this.select(e.target);
     },
@@ -16,9 +16,9 @@ var tabs = {
     },
 }
 
-var buttons = document.querySelectorAll('.tab-button');
-tabs.select(buttons[0]);
-buttons.forEach(button => button.addEventListener("click", (e) => tabs.handleClick(e)));
+var tabs = document.querySelectorAll('.tab-button');
+TBS.select(tabs[0]);
+tabs.forEach(button => button.addEventListener("click", (e) => TBS.handleClick(e)));
 
 function initialise() {
     console.log("result " + document.querySelector('#question'));
