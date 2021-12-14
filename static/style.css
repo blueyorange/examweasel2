@@ -69,6 +69,11 @@ nav > * {
   box-sizing: border-box;
 }
 
+.tab-button:hover {
+  cursor: pointer;
+  background-color: hsl(0, 0%, 70%);
+}
+
 .tab-button.active {
   color: black;
   background-color: white;
