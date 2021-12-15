@@ -58,7 +58,6 @@ const EW = {
   },
 
   createQuestionElem: function (question) {
-    console.log(question, "<<<<<");
     let template = document.querySelector("#question-template");
     let qElem = template.content.cloneNode(true).querySelector(".question");
     // set id to objectid
@@ -197,7 +196,7 @@ const EW = {
         let updatedQuestionElem = this.createQuestionElem(question);
         this.getSelectedQuestionElem().replaceWith(updatedQuestionElem);
         this.highlightQuestion(updatedQuestionElem);
-        EW.displayQuestion(question);
+        this.displayQuestion(question);
       });
   },
 

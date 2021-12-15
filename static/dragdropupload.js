@@ -3,12 +3,10 @@ const DD = {};
 let dropAreas = document.querySelectorAll(".drop-area");
 
 DD.handleDragStart = function (e) {
-  console.log("dragstart");
   DD.dragged = e.target;
 };
 
 DD.handleDragEnd = function (e) {
-  console.log("dragend");
   DD.dragged = null;
 };
 
@@ -16,7 +14,6 @@ document.addEventListener("dragstart", (e) => DD.handleDragStart(e));
 document.addEventListener("dragend", (e) => DD.handleDragEnd(e));
 
 DD.preventDefaults = function (e) {
-  console.log("defaults prevented");
   e.preventDefault();
   e.stopPropagation();
 };
@@ -28,6 +25,7 @@ DD.preventDefaults = function (e) {
 });
 
 DD.highlight = function (e) {
+  console.log(e.dataTransfer.types, "<<<<<<");
   if (DD.dragged && DD.dragged.className === "question") return;
   e.currentTarget.classList.add("highlight");
 };
@@ -50,7 +48,6 @@ DD.unHighlight = function unHighlight(e) {
 
 DD.uploadFiles = function (contentType, files) {
   let formData = new FormData(formElem);
-  console.log(`Saving image ${contentType}`);
   [...files].forEach((file) => formData.set(contentType, file));
   EW.saveQuestion(formData);
 };
@@ -62,6 +59,7 @@ DD.handleDrop = function (e) {
   let files = dt.files;
   DD.uploadFiles(contentType, files);
 };
+
 
 dropAreas.forEach((dropArea) =>
   dropArea.addEventListener("drop", DD.handleDrop, false)
