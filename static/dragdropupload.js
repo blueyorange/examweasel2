@@ -60,7 +60,6 @@ DD.handleDrop = function (e) {
   DD.uploadFiles(contentType, files);
 };
 
-
 dropAreas.forEach((dropArea) =>
   dropArea.addEventListener("drop", DD.handleDrop, false)
 );
